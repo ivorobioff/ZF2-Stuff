@@ -8,14 +8,22 @@ use Zend\InputFilter\InputFilterInterface;
 /**
  * @author Igor Vorobiov<igor.vorobioff@gmail.com>
  */
-abstract class AbstractInputModel extends AbstractModel
+abstract class AbstractInputModel extends AbstractModel implements InputModelInterface
 {
 	private $inputData;
 	private $inputFilter;
 
-	public function __construct(array $inputData)
+	public function __construct(array $inputData = null)
 	{
-		$this->inputData = $inputData;
+		if (!is_null($inputData))
+		{
+			$this->setInputData($inputData);
+		}
+	}
+
+	public function setInputData(array $data)
+	{
+		$this->inputData = $data;
 	}
 
 	protected function populateInputFilter(InputFilterInterface $inputFilter)

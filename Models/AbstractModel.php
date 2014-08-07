@@ -7,7 +7,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * @author Igor Vorobiov<igor.vorobioff@gmail.com>
  */
-abstract class AbstractModel implements ServiceLocatorAwareInterface
+abstract class AbstractModel implements ModelInterface, ServiceLocatorAwareInterface
 {
 	private $serviceLocator;
 
