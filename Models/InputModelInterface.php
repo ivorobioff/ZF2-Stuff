@@ -8,6 +8,8 @@ use Zend\InputFilter\InputFilterInterface;
 interface InputModelInterface 
 {
 	public function setInputData(array $data);
+	public function getInputData();
+
 	public function validate();
 
 	/**

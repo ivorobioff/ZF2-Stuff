@@ -26,6 +26,11 @@ abstract class AbstractInputModel extends AbstractModel implements InputModelInt
 		$this->inputData = $data;
 	}
 
+	public function getInputData()
+	{
+		return $this->inputData;
+	}
+
 	protected function populateInputFilter(InputFilterInterface $inputFilter)
 	{
 		//
