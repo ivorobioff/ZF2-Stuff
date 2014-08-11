@@ -24,4 +24,16 @@ class InvalidInputs extends \Exception
 		$error = reset($errors);
 		return reset($error);
 	}
+
+	public function getFirstErrors()
+	{
+		$errors = [];
+
+		foreach ($this->errors as $field => $error)
+		{
+			$errors[$field] = reset($error);
+		}
+
+		return $errors;
+	}
 }
