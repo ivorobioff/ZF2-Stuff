@@ -1,52 +1,57 @@
 <?php
 function pre()
 {
-	$args = func_get_args();
-
-	foreach ($args as $arg)
-	{
-		echo '<pre>';
-		if ($arg instanceof Iterator)
-		{
-			print_r(iterator_to_array($arg));
-		}
-		else
-		{
-			print_r($arg);
-		}
-
-		echo '</pre>';
-	}
+	_developer_debug_dump(func_get_args(), true);
 }
+
 
 function vre()
 {
-	$args = func_get_args();
-
-	foreach ($args as $arg)
-	{
-		echo '<pre>';
-		if ($arg instanceof Iterator)
-		{
-			var_dump(iterator_to_array($arg));
-		}
-		else
-		{
-			var_dump($arg);
-		}
-
-		echo '</pre>';
-	}
+	_developer_debug_dump(func_get_args());
 }
 
 function pred()
 {
-	pre(func_get_args());
+	_developer_debug_dump(func_get_args(), true);
 	die;
 }
 
 function vred()
 {
-	vre(func_get_args());
+	_developer_debug_dump(func_get_args());
 	die;
+}
+
+function _developer_debug_dump(array $args, $print_r = false)
+{
+	foreach ($args as $arg)
+	{
+		echo '<pre>';
+		if ($arg instanceof Iterator)
+		{
+			$data = iterator_to_array($arg);
+
+			if ($print_r)
+			{
+				print_r($data);
+			}
+			else
+			{
+				var_dump($data);
+			}
+		}
+		else
+		{
+			if ($print_r)
+			{
+				print_r($arg);
+			}
+			else
+			{
+				var_dump($arg);
+			}
+		}
+
+		echo '</pre>';
+	}
 }
