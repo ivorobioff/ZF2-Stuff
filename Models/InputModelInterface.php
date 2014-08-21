@@ -10,6 +10,9 @@ interface InputModelInterface
 	public function setInputData(array $data);
 	public function getInputData();
 
+	public function setQueryData(array $data);
+	public function getQueryData();
+
 	public function validate();
 
 	/**

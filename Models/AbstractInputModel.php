@@ -11,13 +11,19 @@ use Zend\InputFilter\InputFilterInterface;
 abstract class AbstractInputModel extends AbstractModel implements InputModelInterface
 {
 	private $inputData;
+	private $queryData;
 	private $inputFilter;
 
-	public function __construct(array $inputData = null)
+	public function __construct(array $inputData = null, array $queryData = null)
 	{
 		if (!is_null($inputData))
 		{
 			$this->setInputData($inputData);
+		}
+
+		if (!is_null($queryData))
+		{
+			$this->setQueryData($queryData);
 		}
 	}
 
@@ -26,14 +32,29 @@ abstract class AbstractInputModel extends AbstractModel implements InputModelInt
 		$this->inputData = $data;
 	}
 
+	public function setQueryData(array $data)
+	{
+		$this->queryData = $data;
+	}
+
 	public function getInputData()
 	{
 		return $this->inputData;
 	}
 
+	public function getQueryData()
+	{
+		return $this->queryData;
+	}
+
 	protected function populateInputFilter(InputFilterInterface $inputFilter)
 	{
 		//
+	}
+
+	protected function prepareData()
+	{
+		return $this->getInputData();
 	}
 
 	public function getInputFilter()
@@ -43,7 +64,7 @@ abstract class AbstractInputModel extends AbstractModel implements InputModelInt
 			$inputFilter = new InputFilter();
 
 			$this->populateInputFilter($inputFilter);
-			$inputFilter->setData($this->inputData);
+			$inputFilter->setData($this->prepareData());
 
 			$this->inputFilter = $inputFilter;
 		}
@@ -71,7 +92,12 @@ abstract class AbstractInputModel extends AbstractModel implements InputModelInt
 
 	public function __isset($name)
 	{
-		return $this->getInputFilter()->has($name);
+		if (!$this->getInputFilter()->has($name))
+		{
+			return false;
+		}
+
+		return $this->getInputFilter()->getValue($name) !== null;
 	}
 
 	public function __get($name)
